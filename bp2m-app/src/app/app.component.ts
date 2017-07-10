@@ -80,7 +80,7 @@ export class AppComponent {
     var hi = r.mean + (3 * r.deviation);
 
     var intervalsWithin3StdDeviations = new Array<number> ();
-    for (var i = 0; i < intervals.length - 1; i++) {
+    for (var i = 0; i < intervals.length; i++) {
       var val = intervals[i];
       if ((val > low) && (val < hi)) {
         intervalsWithin3StdDeviations.push(val);

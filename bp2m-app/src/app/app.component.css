@@ -12,9 +12,6 @@
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
-
-    border-radius: 15px;
-    outline: none;
 }
 
 .button:after {

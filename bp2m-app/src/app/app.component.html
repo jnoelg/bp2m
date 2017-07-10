@@ -1,0 +1,30 @@
+<div class="jumbotron">
+  <div class="container-fluid">
+    <button type="button" class="button" (click)="addBpmEvent()">
+      <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div *ngIf="getIntervalCount() <= 0">
+        Type on the <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> at least twice...
+      </div>
+      <div *ngIf="getIntervalCount() > 0">
+        {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a (click)="reset()" href="#">Reset</a>
+      </div>
+    </div>
+    <div class="panel-body">
+      <p>Avg: {{getBpmAvg()}}</p>
+      <p>Avg (3 SD): {{getAvgWithin3StdDeviations()}}</p>
+      <hr/>
+      <p>Interv Avg: {{getAvg()}}</p>
+      <p>Standard Deviation (SD): {{getStdDeviation()}}</p>
+    </div>
+  </div>
+
+</div>
+

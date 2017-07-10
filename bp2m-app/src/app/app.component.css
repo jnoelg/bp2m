@@ -1,0 +1,28 @@
+.button {
+    width: 100%;
+
+    background-color: hsl(206, 70%, 41%);
+    
+    border: 1px solid #666;
+    border-radius: 15px;
+    /*box-shadow: 0 9px #666;*/
+    overflow: hidden;
+    outline: none;
+
+    font-size: 28px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 40px;
+    
+    -webkit-transition: 50ms ease-in;
+    -moz-transition: 50ms ease-in;
+    -o-transition: 50ms ease-in;
+    transition: 50ms ease-in;    
+    
+    cursor: pointer;
+}
+
+.button:active {
+  background-color: hsl(206, 70%, 50%);
+}

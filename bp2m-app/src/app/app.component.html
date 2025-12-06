@@ -10,12 +10,16 @@
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div *ngIf="getIntervalCount() <= 0">
-        Type on the <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> at least twice...
-      </div>
-      <div *ngIf="getIntervalCount() > 0">
-        {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a (click)="reset()" href="#">Reset</a>
-      </div>
+      @if (getIntervalCount() <= 0) {
+        <div>
+          Type on the <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> at least twice...
+        </div>
+      }
+      @if (getIntervalCount() > 0) {
+        <div>
+          {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a (click)="reset()" href="#">Reset</a>
+        </div>
+      }
     </div>
     <div class="panel-body">
       <p>Avg: {{getBpmAvg()}}</p>

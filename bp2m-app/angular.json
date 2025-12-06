@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bp2m-app:build"
+            "buildTarget": "bp2m-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "bp2m-app:build:production"
+              "buildTarget": "bp2m-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bp2m-app:build"
+            "buildTarget": "bp2m-app:build"
           }
         },
         "test": {

@@ -1,6 +1,6 @@
 <div class="jumbotron">
   <div class="container-fluid">
-    <button type="button" class="button" (click)="addBpmEvent()">
+    <button id="tap-btn" type="button" class="button" (click)="addBpmEvent()">
       <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
     </button>
   </div>
@@ -17,16 +17,16 @@
       }
       @if (getIntervalCount() > 0) {
         <div>
-          {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a (click)="reset()" href="#">Reset</a>
+          {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a id="reset-link" (click)="reset()" href="#">Reset</a>
         </div>
       }
     </div>
     <div class="panel-body">
-      <p>Avg: {{getBpmAvg()}}</p>
-      <p>Avg (3 SD): {{getAvgWithin3StdDeviations()}}</p>
+      <p id="avg-value">Avg: {{getBpmAvg()}}</p>
+      <p id="avg-sd-value">Avg (3 SD): {{getAvgWithin3StdDeviations()}}</p>
       <hr/>
-      <p>Interv Avg: {{getAvg()}}</p>
-      <p>Standard Deviation (SD): {{getStdDeviation()}}</p>
+      <p id="internval-value">Interv Avg: {{getAvg()}}</p>
+      <p id="sd-value">Standard Deviation (SD): {{getStdDeviation()}}</p>
     </div>
   </div>
 

@@ -72,23 +72,6 @@
           "options": {
             "buildTarget": "bp2m-app:build"
           }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
-            "styles": [
-              "src/styles.css"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ]
-          }
         }
       }
     },
@@ -98,9 +81,9 @@
       "projectType": "application",
       "architect": {
         "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+          "builder": "@angular-devkit/build-angular:cypress",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "cypressConfig": "./cypress.config.js",
             "devServerTarget": "bp2m-app:serve"
           }
         }

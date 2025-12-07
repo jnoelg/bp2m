@@ -1,6 +1,6 @@
-describe('smoke test', () => {
-  it('reacts to user clicks', () => {
-    cy.visit('http://localhost:4200')
+describe('Smoke Test', () => {
+  it('Reacts to user clicks', () => {
+    cy.visit('/')
 
     cy.get('#avg-value').should('have.text', 'Avg: -');
     cy.get('#avg-sd-value').should('have.text', 'Avg (3 SD): -');
@@ -26,6 +26,5 @@ describe('smoke test', () => {
     cy.get('#avg-sd-value').should('have.text', 'Avg (3 SD): -');
     cy.get('#internval-value').should('have.text', 'Interv Avg: -');
     cy.get('#sd-value').should('have.text', 'Standard Deviation (SD): -');
-
   })
 })

@@ -1,4 +1,4 @@
-.button {
+.btn {
     position: relative;
     background-color: hsl(206, 70%, 41%);
     border: none;
@@ -14,7 +14,7 @@
     cursor: pointer;
 }
 
-.button:after {
+.btn:after {
     content: "";
     background: hsl(206, 70%, 50%);
     display: block;
@@ -27,7 +27,7 @@
     transition: all 0.8s
 }
 
-.button:active:after {
+.btn:active:after {
     padding: 0;
     margin: 0;
     opacity: 1;

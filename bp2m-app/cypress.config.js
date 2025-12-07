@@ -1,14 +1,18 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress'
 
-module.exports = defineConfig({
+export default defineConfig({
+  
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
+    'baseUrl': 'http://localhost:4200'
+  },
+  
+  
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
     },
-    specPattern: 'cypress/e2e/*.spec.ts',
-    supportFile: 'cypress/support/e2e.js',
-    chromeWebSecurity: false,
-    viewportWidth: 1280,
-    viewportHeight: 800
+    specPattern: '**/*.cy.ts'
   }
-});
+  
+})

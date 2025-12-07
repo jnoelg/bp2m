@@ -1,0 +1,43 @@
+<main class="main p-5">
+  <div class="mb-4 rounded-3">
+    <div class="container-fluid">
+      <button id="tap-btn" type="button" class="btn btn-default btn-lg" (click)="addBpmEvent()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        @if (getIntervalCount() <= 0) {
+          <div>
+            Type on the 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+            </svg>
+            at least twice...
+          </div>
+        }
+        @if (getIntervalCount() > 0) {
+          <div>
+            {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a id="reset-link" (click)="reset()" href="#">Reset</a>
+          </div>
+        }
+      </div>
+      <div class="panel-body">
+        <p id="avg-value">Avg: {{getBpmAvg()}}</p>
+        <p id="avg-sd-value">Avg (3 SD): {{getAvgWithin3StdDeviations()}}</p>
+        <hr/>
+        <p id="internval-value">Interv Avg: {{getAvg()}}</p>
+        <p id="sd-value">Standard Deviation (SD): {{getStdDeviation()}}</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<router-outlet />

@@ -35,6 +35,13 @@
         <p id="internval-value">Interv Avg: {{getAvg()}}</p>
         <p id="sd-value">Standard Deviation (SD): {{getStdDeviation()}}</p>
       </div>
+      <div style="display: block;">
+        <canvas baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'">
+        </canvas>
+      </div>
     </div>
 
   </div>

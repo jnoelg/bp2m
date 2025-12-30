@@ -1,14 +1,36 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, BaseChartDirective],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('bp2m');
+
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  public lineChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Instantaneous BPM',
+        fill: true,
+        tension: 0.5,
+        borderColor: 'black',
+        backgroundColor: 'rgba(148,159,177,0.2)'
+      }
+    ]
+  };
+
+  public lineChartOptions: ChartOptions<'line'> = {
+    responsive: true
+  };
 
   bpmEvents = new Array<Date>();
 
@@ -19,10 +41,24 @@ export class App {
 
   reset() {
     this.bpmEvents = new Array<Date>();
+    this.lineChartData.labels = [];
+    this.lineChartData.datasets[0].data = [];
+    this.chart?.update();
   }
 
   addBpmEvent() {
-    this.bpmEvents.push(new Date());
+    const now = new Date();
+    this.bpmEvents.push(now);
+
+    if (this.bpmEvents.length > 1) {
+      const prev = this.bpmEvents[this.bpmEvents.length - 2];
+      const diff = now.getTime() - prev.getTime();
+      const bpm = 60000 / diff;
+
+      this.lineChartData.labels?.push(this.bpmEvents.length - 1);
+      this.lineChartData.datasets[0].data.push(bpm);
+      this.chart?.update();
+    }
   }
 
   getDuration() {

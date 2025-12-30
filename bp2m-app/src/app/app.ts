@@ -114,9 +114,9 @@ export class App implements AfterViewInit {
   }
 
   addBpmEvent() {
-    this.triggerRipple();
     const now = new Date();
     this.bpmEvents.push(now);
+    this.triggerRipple();
 
     if (this.bpmEvents.length > 1) {
       const prev = this.bpmEvents[this.bpmEvents.length - 2];

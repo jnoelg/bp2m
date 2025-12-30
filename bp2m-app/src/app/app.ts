@@ -7,10 +7,14 @@ import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
   selector: 'app-root',
   imports: [RouterOutlet, BaseChartDirective],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  host: {
+    '[class.dark-mode]': 'isDarkMode()'
+  }
 })
 export class App implements AfterViewInit {
   protected readonly title = signal('bp2m');
+  protected readonly isDarkMode = signal(false);
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
@@ -74,6 +78,23 @@ export class App implements AfterViewInit {
   getIntervalCount() {
     if (this.bpmEvents == null || this.bpmEvents.length < 1)  return 0;
     return this.bpmEvents.length - 1;
+  }
+
+  toggleTheme() {
+    this.isDarkMode.update(v => !v);
+    const isDark = this.isDarkMode();
+
+    const textColor = isDark ? '#e0e0e0' : '#666';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(200, 200, 200, 0.2)';
+
+    if (this.lineChartOptions.scales?.['y']) {
+      this.lineChartOptions.scales['y'].ticks = { ...this.lineChartOptions.scales['y'].ticks, color: textColor };
+      this.lineChartOptions.scales['y'].grid = { ...this.lineChartOptions.scales['y'].grid, color: gridColor };
+    }
+    if (this.lineChartOptions.scales?.['x']) {
+      this.lineChartOptions.scales['x'].ticks = { ...this.lineChartOptions.scales['x'].ticks, color: textColor };
+    }
+    this.chart?.update();
   }
 
   reset() {

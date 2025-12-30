@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
@@ -17,6 +17,7 @@ export class App implements AfterViewInit {
   protected readonly isDarkMode = signal(localStorage.getItem('theme') === 'dark');
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild('tapBtn') tapBtn?: ElementRef;
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
@@ -218,7 +219,22 @@ export class App implements AfterViewInit {
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.code === 'Space' && !event.repeat) {
       event.preventDefault();
+      this.triggerRipple();
       this.addBpmEvent();
+    }
+  }
+
+  private triggerRipple() {
+    const btn = this.tapBtn?.nativeElement;
+    if (btn) {
+      // Reset animation
+      btn.classList.remove('ripple');
+      void btn.offsetWidth; // Force reflow
+      btn.classList.add('ripple');
+
+      // Add active state for scale effect
+      btn.classList.add('active');
+      setTimeout(() => btn.classList.remove('active'), 100);
     }
   }
 

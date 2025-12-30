@@ -1,43 +1,71 @@
-<main class="main p-5">
-  <div class="mb-4 rounded-3">
-    <div class="container-fluid">
-      <button id="tap-btn" type="button" class="btn btn-default btn-lg" (click)="addBpmEvent()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"></path>
-        </svg>
-      </button>
-    </div>
+<main class="main">
+  <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle Dark Mode">
+    @if (isDarkMode()) {
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.46 4.46a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+      </svg>
+    } @else {
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+      </svg>
+    }
+  </button>
+
+  <header class="header">
+    <h1 class="app-title">{{ title() }}</h1>
+    <p class="app-subtitle">Tap the heart to the beat of your music</p>
+  </header>
+
+  <div class="tap-container">
+    <button #tapBtn id="tap-btn" type="button" class="tap-btn" (click)="addBpmEvent()" aria-label="Tap Beat">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"></path>
+      </svg>
+    </button>
   </div>
 
+  @if (getIntervalCount() <= 0) {
+    <div class="empty-state">
+      Start tapping to measure BPM...
+    </div>
+  }
 
-  <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        @if (getIntervalCount() <= 0) {
-          <div>
-            Type on the 
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-            </svg>
-            at least twice...
-          </div>
-        }
-        @if (getIntervalCount() > 0) {
-          <div>
-            {{getIntervalCount()}} beat(s) over {{getDuration()}} second(s) - <a id="reset-link" (click)="reset()" href="#">Reset</a>
-          </div>
-        }
+  @if (getIntervalCount() > 0) {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Average BPM</span>
+        <span class="stat-value">{{getBpmAvg()}}</span>
       </div>
-      <div class="panel-body">
-        <p id="avg-value">Avg: {{getBpmAvg()}}</p>
-        <p id="avg-sd-value">Avg (3 SD): {{getAvgWithin3StdDeviations()}}</p>
-        <hr/>
-        <p id="internval-value">Interv Avg: {{getAvg()}}</p>
-        <p id="sd-value">Standard Deviation (SD): {{getStdDeviation()}}</p>
+      <div class="stat-card">
+        <span class="stat-label">Filtered BPM</span>
+        <span class="stat-value">{{getAvgWithin3StdDeviations()}}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Interval</span>
+        <span class="stat-value">{{getAvg()}}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Deviation</span>
+        <span class="stat-value">{{getStdDeviation()}}</span>
       </div>
     </div>
 
-  </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-info">
+          <strong>{{getIntervalCount()}}</strong> beat(s) over <strong>{{getDuration()}}s</strong>
+        </div>
+        <a href="#" class="reset-link" (click)="reset(); $event.preventDefault()">Reset Data</a>
+      </div>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'">
+        </canvas>
+      </div>
+    </div>
+  }
 </main>
 
 <router-outlet />

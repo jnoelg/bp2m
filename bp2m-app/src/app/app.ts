@@ -28,6 +28,18 @@ export class App implements AfterViewInit {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(54, 162, 235, 0.8)'
+      },
+      {
+        data: [],
+        label: 'Average BPM',
+        fill: false,
+        tension: 0.4,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(255, 99, 132, 0.8)'
       }
     ]
   };
@@ -67,6 +79,9 @@ export class App implements AfterViewInit {
     this.bpmEvents = new Array<Date>();
     this.lineChartData.labels = [];
     this.lineChartData.datasets[0].data = [];
+    if (this.lineChartData.datasets[1]) {
+      this.lineChartData.datasets[1].data = [];
+    }
     this.chart?.update();
   }
 
@@ -81,6 +96,13 @@ export class App implements AfterViewInit {
 
       this.lineChartData.labels?.push(this.bpmEvents.length - 1);
       this.lineChartData.datasets[0].data.push(bpm);
+
+      const intervals = this.getIntervals();
+      const avg = this._average(intervals);
+      const avgBpm = 60000 / avg.mean;
+      if (this.lineChartData.datasets[1]) {
+        this.lineChartData.datasets[1].data.push(avgBpm);
+      }
       this.chart?.update();
     }
   }

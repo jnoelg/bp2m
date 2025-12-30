@@ -49,7 +49,8 @@ export class App implements AfterViewInit {
     maintainAspectRatio: false,
     scales: {
       y: {
-        beginAtZero: true,
+        suggestedMin: 20,
+        suggestedMax: 60,
         grid: {
           color: 'rgba(200, 200, 200, 0.2)' // Lighter grid lines
         },

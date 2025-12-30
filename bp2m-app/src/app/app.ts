@@ -14,7 +14,7 @@ import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
 })
 export class App implements AfterViewInit {
   protected readonly title = signal('bp2m');
-  protected readonly isDarkMode = signal(false);
+  protected readonly isDarkMode = signal(localStorage.getItem('theme') === 'dark');
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
@@ -82,6 +82,11 @@ export class App implements AfterViewInit {
 
   toggleTheme() {
     this.isDarkMode.update(v => !v);
+    localStorage.setItem('theme', this.isDarkMode() ? 'dark' : 'light');
+    this.updateChartTheme();
+  }
+
+  private updateChartTheme() {
     const isDark = this.isDarkMode();
 
     const textColor = isDark ? '#e0e0e0' : '#666';
@@ -220,6 +225,8 @@ export class App implements AfterViewInit {
       setTimeout(() => this.applyChartStyles(), 50);
       return;
     }
+
+    this.updateChartTheme();
 
     const gradient = this.createChartGradient(chart);
     this.lineChartData.datasets[0].backgroundColor = gradient;

@@ -1,7 +1,7 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements AfterViewInit {
   protected readonly title = signal('bp2m');
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
@@ -21,15 +21,39 @@ export class App {
         data: [],
         label: 'Instantaneous BPM',
         fill: true,
-        tension: 0.5,
-        borderColor: 'black',
-        backgroundColor: 'rgba(148,159,177,0.2)'
+        tension: 0.4,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Placeholder, will be replaced by gradient
+        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(54, 162, 235, 0.8)'
       }
     ]
   };
 
   public lineChartOptions: ChartOptions<'line'> = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(200, 200, 200, 0.2)' // Lighter grid lines
+        },
+        ticks: {
+          color: '#666' // Darker tick labels
+        }
+      },
+      x: {
+        grid: {
+          display: false // Hide vertical grid lines for a cleaner look
+        },
+        ticks: {
+          color: '#666'
+        }
+      }
+    }
   };
 
   bpmEvents = new Array<Date>();
@@ -139,5 +163,30 @@ export class App {
     const deviation = Math.sqrt(variance);
 
     return { mean, variance, deviation };
+  }
+
+  ngAfterViewInit(): void {
+    this.applyChartStyles();
+  }
+
+  private applyChartStyles(): void {
+    const chart = this.chart?.chart;
+    if (!chart) {
+      // Retry if chart is not yet available, which can happen in some rendering scenarios.
+      setTimeout(() => this.applyChartStyles(), 50);
+      return;
+    }
+
+    const gradient = this.createChartGradient(chart);
+    this.lineChartData.datasets[0].backgroundColor = gradient;
+    this.chart?.update();
+  }
+
+  private createChartGradient(chart: Chart): CanvasGradient {
+    const ctx = chart.ctx;
+    const gradient = ctx.createLinearGradient(0, chart.chartArea.bottom, 0, chart.chartArea.top);
+    gradient.addColorStop(0, 'rgba(75, 192, 192, 0.1)');
+    gradient.addColorStop(1, 'rgba(54, 162, 235, 0.8)');
+    return gradient;
   }
 }

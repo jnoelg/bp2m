@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
@@ -212,6 +212,14 @@ export class App implements AfterViewInit {
     const deviation = Math.sqrt(variance);
 
     return { mean, variance, deviation };
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.code === 'Space' && !event.repeat) {
+      event.preventDefault();
+      this.addBpmEvent();
+    }
   }
 
   ngAfterViewInit(): void {

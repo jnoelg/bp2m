@@ -94,17 +94,14 @@ export class App {
 
   private _average(a: number[]) {
     const n = a.length;
+    const sum = a.reduce((acc, val) => acc + val, 0);
+    const mean = sum / n;
 
-    let sum = 0
-    for(let l = n; l--; sum += a[l]);
-    const mean = sum / n
+    const sumSquaredDiff = a.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
+    const variance = sumSquaredDiff / n;
 
-    sum = 0
-    for(let l = n; l--; sum += Math.pow(a[l] - mean, 2));
-    const variance = sum / n
+    const deviation = Math.sqrt(variance);
 
-    const deviation = Math.sqrt(variance)
-
-    return { mean: mean, variance: variance, deviation: deviation };
+    return { mean, variance, deviation };
   }
 }

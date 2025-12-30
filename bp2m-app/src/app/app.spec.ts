@@ -120,5 +120,17 @@ describe('App', () => {
 
       expect(component.getAvgWithin3StdDeviations()).toBe('600.0 bpm');
     });
+
+    it('should calculate internal average statistics correctly', () => {
+      // Test data: [2, 4, 4, 4, 5, 5, 7, 9]
+      // Mean: 40 / 8 = 5
+      // Variance: ((9+1+1+1+0+0+4+16) / 8) = 32 / 8 = 4
+      // Deviation: sqrt(4) = 2
+      const result = (component as any)._average([2, 4, 4, 4, 5, 5, 7, 9]);
+
+      expect(result.mean).toBe(5);
+      expect(result.variance).toBe(4);
+      expect(result.deviation).toBe(2);
+    });
   });
 });

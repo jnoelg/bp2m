@@ -114,6 +114,7 @@ export class App implements AfterViewInit {
   }
 
   addBpmEvent() {
+    this.triggerRipple();
     const now = new Date();
     this.bpmEvents.push(now);
 
@@ -219,7 +220,6 @@ export class App implements AfterViewInit {
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.code === 'Space' && !event.repeat) {
       event.preventDefault();
-      this.triggerRipple();
       this.addBpmEvent();
     }
   }

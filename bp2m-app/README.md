@@ -1,63 +1,28 @@
-# Bp2m
+# BP2M - Beats Per Minute Meter
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+A simple, lightweight web application to measure Beats Per Minute (BPM) by tapping.
 
-## Development server
+This project is built with plain HTML, CSS, and JavaScript, with no frameworks or build steps required.
 
-To start a local development server, run:
+## Getting Started
 
-```bash
-ng serve
-```
+1.  **Install Dependencies:**
+    This project uses `http-server` to serve the application and `Playwright` for end-to-end testing. Install the development dependencies using npm:
+    ```bash
+    npm install
+    ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2.  **Start the Application:**
+    To serve the application locally, run the following command:
+    ```bash
+    npm start
+    ```
+    Once the server is running, open your browser and navigate to `http://localhost:8080/`.
 
-## Code scaffolding
+## Running Tests
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+The end-to-end tests are written using [Playwright](https://playwright.dev/). To execute the tests, run:
 
 ```bash
-ng build
+npm test
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-## Update to the next Angular version
-
-Run `npm run ng update` and follow the instructions, for example `npm run ng update @angular/cli@XX @angular/core@XX` where `XX` is the next major version.

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('BPM App E2E Test for Vanilla JS version', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/index.vanilla.html');
+    await page.goto('/');
   });
 
   test('should display the initial empty state', async ({ page }) => {

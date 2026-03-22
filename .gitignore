@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# playwright output
+bp2m-app/playwright-report
+bp2m-app/test-results/.last-run.json

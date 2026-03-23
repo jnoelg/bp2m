@@ -130,7 +130,9 @@ class BpmApp {
     this.tapTimestamps.push(now);
 
     if (this.tapTimestamps.length > 1) {
-      const interval = this.tapTimestamps[this.tapTimestamps.length - 1] - this.tapTimestamps[this.tapTimestamps.length - 2];
+      const interval =
+        this.tapTimestamps[this.tapTimestamps.length - 1] -
+        this.tapTimestamps[this.tapTimestamps.length - 2];
       this.intervals.push(interval);
     }
 
@@ -168,13 +170,15 @@ class BpmApp {
       type: 'line',
       data: {
         labels: [],
-        datasets: [{
-          label: 'BPM per Tap',
-          data: [],
-          borderColor: '#007bff',
-          tension: 0.1,
-          fill: false
-        }]
+        datasets: [
+          {
+            label: 'BPM per Tap',
+            data: [],
+            borderColor: '#007bff',
+            tension: 0.1,
+            fill: false
+          }
+        ]
       },
       options: {
         responsive: true,
@@ -237,7 +241,7 @@ class BpmApp {
   setupEventListeners() {
     this.elements.tapBtn.addEventListener('click', () => this.addBpmEvent());
 
-    this.elements.resetLink.addEventListener('click', (e) => {
+    this.elements.resetLink.addEventListener('click', e => {
       e.preventDefault();
       this.reset();
     });

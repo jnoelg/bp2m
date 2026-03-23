@@ -8,7 +8,7 @@ const createMockElement = (props = {}) => {
     style: {},
     innerHTML: '',
     textContent: '0',
-    tagName: '',
+    tagName: ''
   };
   if (props.styleDisplay !== undefined) {
     el.style.display = props.styleDisplay;
@@ -46,7 +46,10 @@ const localStorageRemoveSpy = vi.fn(localStorageMock.removeItem);
 
 Object.defineProperty(localStorageMock, 'getItem', { value: localStorageGetSpy, writable: true });
 Object.defineProperty(localStorageMock, 'setItem', { value: localStorageSetSpy, writable: true });
-Object.defineProperty(localStorageMock, 'removeItem', { value: localStorageRemoveSpy, writable: true });
+Object.defineProperty(localStorageMock, 'removeItem', {
+  value: localStorageRemoveSpy,
+  writable: true
+});
 
 const createMockElements = () => ({
   tapBtn: createMockElement(),
@@ -59,7 +62,7 @@ const createMockElements = () => ({
   avgIntervalEl: createMockElement({ textContent: '0' }),
   stdDevEl: createMockElement({ textContent: '0' }),
   beatCountEl: createMockElement({ textContent: '0' }),
-  durationEl: createMockElement({ textContent: '0s' }),
+  durationEl: createMockElement({ textContent: '0s' })
 });
 
 describe('BpmApp', () => {
@@ -84,21 +87,24 @@ describe('BpmApp', () => {
         lineTo: vi.fn(),
         closePath: vi.fn(),
         fill: vi.fn(),
-        clearRect: vi.fn(),
-      }),
+        clearRect: vi.fn()
+      })
     };
-    vi.spyOn(document, 'getElementById').mockImplementation((id) => {
+    vi.spyOn(document, 'getElementById').mockImplementation(id => {
       if (id === 'bpmChart') return mockCanvas;
       return null;
     });
 
     // Mock Chart for this test instance
-    vi.stubGlobal('Chart', class MockChart {
-      constructor(config) {
-        this.data = config.data || { labels: [], datasets: [] };
-        this.update = vi.fn();
+    vi.stubGlobal(
+      'Chart',
+      class MockChart {
+        constructor(config) {
+          this.data = config.data || { labels: [], datasets: [] };
+          this.update = vi.fn();
+        }
       }
-    });
+    );
   });
 
   afterEach(() => {

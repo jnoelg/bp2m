@@ -90,6 +90,19 @@ vitest src/js/bpm-app.test.js --update
 npx playwright test e2e/bpm-app.spec.ts --debug
 ```
 
+### Linting
+
+```bash
+# Run ESLint
+npm run lint
+
+# Run ESLint and auto-fix issues
+npm run lint:fix
+
+# Format code with Prettier
+npm run format
+```
+
 ## Code Patterns
 
 ### Theme Toggle Icon Updates
@@ -116,6 +129,22 @@ Intervals are filtered using 3 standard deviations:
 const filtered = intervals.filter(v => Math.abs(v - avg) <= 3 * stdDev);
 ```
 
+### Linting Configuration
+
+**ESLint Rules:**
+- 2-space indentation (matches `.editorconfig`)
+- Single quotes (matches `.editorconfig`)
+- Always require semicolons
+- Require trailing commas in objects
+
+**Prettier Configuration:**
+- `singleQuote: true`
+- `printWidth: 100`
+- `tabWidth: 2`
+- `useTabs: false`
+- `semi: true`
+- `trailingComma: 'all'`
+
 ## Data Flow
 
 1. User taps the heart button
@@ -127,6 +156,7 @@ const filtered = intervals.filter(v => Math.abs(v - avg) <= 3 * stdDev);
 
 ## Notes
 
-- No linting configuration (no ESLint/Prettier)
+- ESLint configured with 2-space indentation, single quotes, and trailing commas
+- Prettier configured to match ESLint style
 - Tests use JSDOM for DOM simulation
 - The app serves static files directly via `serve`

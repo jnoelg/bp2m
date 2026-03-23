@@ -19,6 +19,8 @@ BP2M (Beats Per Minute Meter) is a lightweight vanilla JavaScript web applicatio
 **Dev Dependencies:**
 - serve (static file server)
 - jsdom (test environment)
+- eslint (code linting)
+- prettier (code formatting)
 
 ## Development Workflow
 
@@ -27,6 +29,9 @@ BP2M (Beats Per Minute Meter) is a lightweight vanilla JavaScript web applicatio
 - `npm start` - Start server on port 8000
 - `npm test:unit` - Run Vitest unit tests
 - `npm test:e2e` - Run Playwright E2E tests
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Run ESLint with auto-fix
+- `npm run format` - Format code with Prettier
 
 **Files:**
 - Main app: `src/index.html` (loads `src/js/bpm-app.js`)

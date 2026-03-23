@@ -17,6 +17,6 @@ This is a lightweight, dependency-free web application for calculating Beats Per
 
 ## Development Workflow
 
-*   **Installation:** Run `npm install` to get the development dependencies (`http-server`, `playwright`, `vitest`).
+*   **Installation:** Run `npm install` to get the development dependencies (`serve`, `playwright`, `vitest`).
 *   **Running the App:** Use `npm start` to launch a local server.
 *   **Running Tests:** Use `npm test:e2e` to execute the Playwright test suite. Use `npm test:unit` to execute the vitest test suite.

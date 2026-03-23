@@ -7,7 +7,7 @@ This project is built with plain HTML, CSS, and JavaScript, with no frameworks o
 ## Getting Started
 
 1.  **Install Dependencies:**
-    This project uses `http-server` to serve the application and `Playwright` for end-to-end testing. Install the development dependencies using npm:
+    This project uses `serve` to serve the application and `Playwright` for end-to-end testing. Install the development dependencies using npm:
     ```bash
     npm install
     ```

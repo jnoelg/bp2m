@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx http-server src -p 8000',
+    command: 'npx serve -s src -l 8000',
     url: 'http://localhost:8000',
     reuseExistingServer: !process.env.CI,
   },

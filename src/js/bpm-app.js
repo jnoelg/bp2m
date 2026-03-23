@@ -218,7 +218,7 @@ class BpmApp {
    * Update the theme toggle icon
    */
   updateThemeIcon(theme) {
-    const icon = theme === 'dark' ? 'bi-moon-stars' : 'bi-sun';
+    const icon = theme === 'dark' ? 'moon-stars' : 'sun';
     this.elements.themeToggle.innerHTML = `<i class="bi bi-${icon}"></i>`;
   }
 

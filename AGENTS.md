@@ -2,21 +2,49 @@ This document provides a high-level overview of the project for AI agents.
 
 ## Project Goal
 
-This is a lightweight, dependency-free web application for calculating Beats Per Minute (BPM). The primary goal is simplicity and maintainability, with zero reliance on web frameworks or complex build systems.
+BP2M (Beats Per Minute Meter) is a lightweight vanilla JavaScript web application that measures BPM by recording tap intervals. Primary goals: simplicity and maintainability with zero framework dependencies.
 
 ## Technology Stack
 
-*   **Application:** Vanilla HTML, CSS, and JavaScript.
-    *   All application code is contained within `src/index.html`.
-    *   External libraries (Bootstrap, Chart.js) are loaded via CDN.
-*   **Testing:** End-to-end tests are handled by [Playwright](https://playwright.dev/). Unit tests are handled by [Vitest](https://vitest.dev/).
-    *   End-to-end test files are located in the `e2e/` directory.
-    *   The E2E configuration is in `playwright.config.ts`.
-    *   Unit test files are located in `src/` with `.test.js` suffix.
-    *   The unit test configuration is in `vitest.config.ts`.
+**Frontend:**
+- Vanilla HTML, CSS, JavaScript
+- Bootstrap 5.3.3 (UI framework)
+- Bootstrap Icons
+- Chart.js 4.4.2 (BPM visualization)
+
+**Testing:**
+- Vitest (unit tests in `src/js/*.test.js`)
+- Playwright (E2E tests in `e2e/`)
+
+**Dev Dependencies:**
+- serve (static file server)
+- jsdom (test environment)
 
 ## Development Workflow
 
-*   **Installation:** Run `npm install` to get the development dependencies (`serve`, `playwright`, `vitest`).
-*   **Running the App:** Use `npm start` to launch a local server.
-*   **Running Tests:** Use `npm test:e2e` to execute the Playwright test suite. Use `npm test:unit` to execute the vitest test suite.
+**Commands:**
+- `npm install` - Install dependencies
+- `npm start` - Start server on port 8000
+- `npm test:unit` - Run Vitest unit tests
+- `npm test:e2e` - Run Playwright E2E tests
+
+**Files:**
+- Main app: `src/index.html` (loads `src/js/bpm-app.js`)
+- BpmApp class: `src/js/bpm-app.js`
+- Unit tests: `src/js/bpm-app.test.js` (JSDOM environment)
+- E2E tests: `e2e/bpm-app.spec.ts`
+
+## Key Implementation Details
+
+**BPM Calculation:**
+```javascript
+BPM = 60000 / interval_ms
+```
+
+**Stats Filtering:**
+- Keeps intervals where `|interval - avg| <= 3 * stdDev`
+
+**Theme Toggle Icons:**
+- Light mode: `bi-sun`
+- Dark mode: `bi-moon-stars`
+- Preference persisted in localStorage

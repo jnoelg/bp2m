@@ -118,7 +118,7 @@
       </button>
     </div>
 
-    <div id="empty-state" class="empty-state">
+    <div id="empty-state" class="empty-state" style="display: block;">
       Start tapping to measure BPM...
     </div>
 
@@ -157,170 +157,11 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="js/bpm-app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const tapBtn = document.getElementById('tap-btn');
-      const resetLink = document.getElementById('reset-link');
-      const themeToggle = document.getElementById('theme-toggle');
-
-      const emptyStateEl = document.getElementById('empty-state');
-      const resultsEl = document.getElementById('results');
-
-      const avgBpmEl = document.getElementById('avg-bpm');
-      const filteredBpmEl = document.getElementById('filtered-bpm');
-      const avgIntervalEl = document.getElementById('avg-interval');
-      const stdDevEl = document.getElementById('std-dev');
-      const beatCountEl = document.getElementById('beat-count');
-      const durationEl = document.getElementById('duration');
-
-      let tapTimestamps = [];
-      let intervals = [];
-      let startTime = null;
-      let chart = null;
-
-      const calculateStats = () => {
-        if (intervals.length < 1) return null;
-
-        const sum = intervals.reduce((a, b) => a + b, 0);
-        const avg = sum / intervals.length;
-        
-        const squareDiffs = intervals.map(value => {
-          const diff = value - avg;
-          return diff * diff;
-        });
-        const avgSquareDiff = squareDiffs.reduce((a, b) => a + b, 0) / squareDiffs.length;
-        const stdDev = Math.sqrt(avgSquareDiff);
-
-        const intervalsWithin3StdDev = intervals.filter(value => Math.abs(value - avg) <= 3 * stdDev);
-        const sumWithin3StdDev = intervalsWithin3StdDev.reduce((a,b) => a+b, 0);
-        const avgWithin3StdDev = sumWithin3StdDev / intervalsWithin3StdDev.length;
-
-        return {
-            avg,
-            stdDev,
-            avgWithin3StdDev
-        };
-      };
-
-      const updateUI = () => {
-        const stats = calculateStats();
-        if (!stats) {
-            emptyStateEl.style.display = 'block';
-            resultsEl.style.display = 'none';
-            return;
-        };
-
-        emptyStateEl.style.display = 'none';
-        resultsEl.style.display = 'block';
-
-        const avgBpm = 60000 / stats.avg;
-        const filteredBpm = 60000 / stats.avgWithin3StdDev;
-
-        avgBpmEl.textContent = avgBpm.toFixed(1);
-        filteredBpmEl.textContent = filteredBpm.toFixed(1);
-        avgIntervalEl.textContent = stats.avg.toFixed(0);
-        stdDevEl.textContent = stats.stdDev.toFixed(0);
-
-        beatCountEl.textContent = tapTimestamps.length;
-        const duration = (tapTimestamps[tapTimestamps.length - 1] - startTime) / 1000;
-        durationEl.textContent = duration.toFixed(1) + 's';
-        
-        updateChart();
-      };
-
-      const addBpmEvent = () => {
-        const now = performance.now();
-        if (tapTimestamps.length === 0) {
-          startTime = now;
-        }
-
-        tapTimestamps.push(now);
-
-        if (tapTimestamps.length > 1) {
-          const interval = tapTimestamps[tapTimestamps.length - 1] - tapTimestamps[tapTimestamps.length - 2];
-          intervals.push(interval);
-        }
-        
-        // Keep only last 100 intervals for performance
-        if(intervals.length > 100) {
-            intervals.shift();
-            tapTimestamps.shift();
-        }
-
-        updateUI();
-      };
-
-      const reset = () => {
-        tapTimestamps = [];
-        intervals = [];
-        startTime = null;
-        updateUI();
-        if(chart) {
-            chart.data.labels = [];
-            chart.data.datasets[0].data = [];
-            chart.update();
-        }
-      };
-
-      const initializeChart = () => {
-        const ctx = document.getElementById('bpmChart').getContext('2d');
-        chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: [],
-            datasets: [{
-              label: 'BPM per Tap',
-              data: [],
-              borderColor: '#007bff',
-              tension: 0.1,
-              fill: false
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: false,
-                title: { display: true, text: 'BPM'}
-              },
-              x: {
-                 title: { display: true, text: 'Tap Count'}
-              }
-            }
-          }
-        });
-      };
-      
-      const updateChart = () => {
-          if (!chart) return;
-          const bpmValues = intervals.map(interval => 60000 / interval);
-          chart.data.labels = bpmValues.map((_,i) => i+1);
-          chart.data.datasets[0].data = bpmValues;
-          chart.update();
-      }
-      
-      const toggleTheme = () => {
-          const currentTheme = document.documentElement.getAttribute('data-theme');
-          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', newTheme);
-          localStorage.setItem('theme', newTheme);
-          themeToggle.innerHTML = newTheme === 'dark' ? '<i class="bi bi-moon-stars"></i>' : '<i class="bi bi-sun"></i>'
-      };
-
-      // Set initial theme
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="bi bi-moon-stars"></i>' : '<i class="bi bi-sun"></i>'
-
-
-      tapBtn.addEventListener('click', addBpmEvent);
-      resetLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        reset();
-      });
-      themeToggle.addEventListener('click', toggleTheme);
-
-      initializeChart();
+    // Initialize app when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      new BpmApp().init();
     });
   </script>
 </body>

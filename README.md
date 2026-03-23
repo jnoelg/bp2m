@@ -7,7 +7,7 @@ This project is built with plain HTML, CSS, and JavaScript, with no frameworks o
 ## Getting Started
 
 1.  **Install Dependencies:**
-    This project uses `http-server` to serve the application and `Playwright` for end-to-end testing. Install the development dependencies using npm:
+    This project uses `serve` to serve the application and `Playwright` for end-to-end testing. Install the development dependencies using npm:
     ```bash
     npm install
     ```
@@ -17,12 +17,18 @@ This project is built with plain HTML, CSS, and JavaScript, with no frameworks o
     ```bash
     npm start
     ```
-    Once the server is running, open your browser and navigate to `http://localhost:8080/`.
+    Once the server is running, open your browser and navigate to `http://localhost:8000/`.
 
 ## Running Tests
 
-The end-to-end tests are written using [Playwright](https://playwright.dev/). To execute the tests, run:
+The end-to-end tests are written using [Playwright](https://playwright.dev/). To execute those tests, run:
 
 ```bash
-npm test
+npm test:e2e
+```
+
+The unit tests are written using [Vitest](https://vitest.dev/). To execute those tests, run
+
+```bash
+npm test:unit
 ```

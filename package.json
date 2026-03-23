@@ -2,13 +2,17 @@
   "name": "bp2m",
   "version": "0.0.0",
   "scripts": {
-    "start": "http-server src -p 8080",
-    "test": "npx playwright test"
+    "start": "serve -s src -l 8000",
+    "test:e2e": "npx playwright test",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "private": true,
   "packageManager": "npm@10.9.4",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "http-server": "^14.1.1"
+    "serve": "^14.2.6",
+    "jsdom": "^29.0.1",
+    "vitest": "^4.1.0"
   }
 }
